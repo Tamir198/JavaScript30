@@ -4,6 +4,8 @@ var base = document.getElementById("base");
 
 spacing.addEventListener("change", handleSpacingChanges);
 spacing.addEventListener("mousemove", handleSpacingChanges);
+
+
 blur.addEventListener("change", handleBlurChanges);
 blur.addEventListener("mousemove", handleBlurChanges);
 base.addEventListener("change", handleBaseChanges);
