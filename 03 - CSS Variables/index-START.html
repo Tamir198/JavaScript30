@@ -25,6 +25,21 @@
     /*
       misc styles, nothing to do with CSS variables
     */
+    :root {
+      --base: #ff0080;
+      --spacing: 50px;
+      --blur: 50px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
 
     body {
       text-align: center;
@@ -44,8 +59,7 @@
     }
   </style>
 
-  <script>
-  </script>
+  <script src="index.js"></script>
 
 </body>
 </html>
