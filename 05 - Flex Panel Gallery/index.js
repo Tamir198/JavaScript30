@@ -1,16 +1,13 @@
 const panels = document.querySelectorAll('.panel');
 
-panels.forEach(panel => panel.addEventListener("click", ()=> togglePanelWidth(panel)));
-panels.forEach(panel => panel.addEventListener('transitionend', ()=>toggleTextShow(panel)));
+panels.forEach(panel => panel.addEventListener("click", () => togglePanelWidth(panel)));
 
-function togglePanelWidth(panel){
+function togglePanelWidth(panel) {
   panel.classList.toggle('open');
-  }
-
-function toggleTextShow(panel){
-  panel.classList.toggle('open-active');
+  setTimeout(() => {
+    panel.classList.toggle('open-active');
+  }, 500);
 }
-
 
 
 
