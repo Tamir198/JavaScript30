@@ -1,6 +1,7 @@
-var canvas = document.getElementById('draw')
-var canvasContext =  canvas.getContext('2d');
-var isLineWidthGrowing = true;
+const canvas = document.getElementById('draw')
+let canvasContext = canvas.getContext('2d');
+let isLineWidthGrowing = true;
+let hslHue  = 0;
 resizeCanvas();
 
 var lastMousePos = { x: 0, y: 0 };
@@ -24,36 +25,34 @@ function drawWithMouseOnCanvas(e) {
   //NOTHING GOT PRESSES 
   if (!e.buttons) return;
 
-  canvasContext.beginPath(); 
+  canvasContext.beginPath();
   canvasContext.lineWidth = getLineSize(canvasContext.lineWidth);
   canvasContext.lineCap = 'round';
   canvasContext.lineJoin = 'round';
-  canvasContext.strokeStyle =  getStrokeColor();
+  canvasContext.strokeStyle = getStrokeColor();
 
-  canvasContext.moveTo(lastMousePos.x, lastMousePos.y); 
+  canvasContext.moveTo(lastMousePos.x, lastMousePos.y);
   setNewMousePos(e);
   canvasContext.lineTo(lastMousePos.x, lastMousePos.y);
-  canvasContext.stroke(); 
+  canvasContext.stroke();
 }
+
 
 function getStrokeColor() {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+  if (hslHue >= 360) {
+    hslHue = 0;
   }
-  return  color;
+  return `hsl(${hslHue+= 1/10}, 100%, 50%)`;;
 }
 
-function getLineSize(size){
-  console.log(size);
-  if(size >= 100){
+function getLineSize(size) {
+  if (size >= 100) {
     isLineWidthGrowing = false;
-  } 
-  if(size <= 1){
+  }
+  if (size <= 1) {
     isLineWidthGrowing = true;
   }
-  return isLineWidthGrowing ?  size+1 : size-1;
+  return (isLineWidthGrowing) ? (size + 1 / 10) : (size - 1 / 10);
 }
 
 
