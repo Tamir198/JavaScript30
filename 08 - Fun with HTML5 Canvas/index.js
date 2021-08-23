@@ -1,12 +1,14 @@
 const canvas = document.getElementById('draw')
-let canvasContext = canvas.getContext('2d');
+const canvasContext = canvas.getContext('2d');
 let isLineWidthGrowing = true;
 let hslHue  = 0;
-resizeCanvas();
 
 var lastMousePos = { x: 0, y: 0 };
 
-window.addEventListener('resize', resizeCanvas);
+window.onload = function() {
+  resizeCanvas();
+};
+
 document.addEventListener('mousemove', drawWithMouseOnCanvas);
 document.addEventListener('mousedown', setNewMousePos);
 document.addEventListener('mouseenter', setNewMousePos);
@@ -17,12 +19,13 @@ function setNewMousePos(e) {
 }
 
 function resizeCanvas() {
+  console.log("sd");
   canvasContext.canvas.width = window.innerWidth;
   canvasContext.canvas.height = window.innerHeight;
 }
 
 function drawWithMouseOnCanvas(e) {
-  //NOTHING GOT PRESSES 
+  //Dont draw if mouse was no pressed 
   if (!e.buttons) return;
 
   canvasContext.beginPath();
@@ -37,12 +40,11 @@ function drawWithMouseOnCanvas(e) {
   canvasContext.stroke();
 }
 
-
 function getStrokeColor() {
   if (hslHue >= 360) {
     hslHue = 0;
   }
-  return `hsl(${hslHue+= 1/10}, 100%, 50%)`;;
+  return `hsl(${hslHue+= 1/10}, 100%, 50%)`;
 }
 
 function getLineSize(size) {
@@ -54,6 +56,3 @@ function getLineSize(size) {
   }
   return (isLineWidthGrowing) ? (size + 1 / 10) : (size - 1 / 10);
 }
-
-
-
