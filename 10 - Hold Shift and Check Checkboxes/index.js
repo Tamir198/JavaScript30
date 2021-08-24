@@ -1,29 +1,28 @@
-let isShitPressed = false;
-const checkBoxes = document.querySelectorAll('.inbox input');
+let isFirstClickOnCheckbox = true;
+let isShiftPressed = false;
+let firstCheckboxIndex;
+const checkBoxes = [...document.querySelectorAll('.inbox input')];
 
-document.addEventListener("keydown",checkIfShiftPressed);
-document.addEventListener("ketup",shiftIsNotPressed);
-checkBoxes.forEach(() => addEventListener("click",clickRelevantBoxes));
+checkBoxes.forEach(checkbox => checkbox.addEventListener("click", clickCheckBoxesInrange));
 
-function checkIfShiftPressed(e){
-  isShitPressed = e.shiftKey;
-}
-
-//TODO change status of isShitPressed on key up
-function shiftIsNotPressed(e){
-  isShitPressed = e.shiftKey;
-}
-
-function clickRelevantBoxes(e){
-  if(isShitPressed){
-    checkBoxes.forEach(element => {
-      //TODO stop the function if there anything pressed 
-      if(!element.checked){
-        element.click();
-        console.count(element.checked);
-      }else{
-        return;
-      }
-    });
+function updateFirstCheckboxClicked(e) {
+  for (let i = 0, len = checkBoxes.length; i < len; i++) {
+    if (isFirstClickOnCheckbox && checkBoxes[i] == e.target) {
+      firstCheckboxIndex = i;
+    };
   }
 }
+
+function clickCheckBoxesInrange(e) {
+  updateFirstCheckboxClicked(e);
+  isFirstClickOnCheckbox = false;
+  if (e.shiftKey) {
+    for (let i = firstCheckboxIndex; i < checkBoxes.length; i++) {
+      if (e.target == checkBoxes[i]) {
+        break;
+      }
+      checkBoxes[i].checked = true;
+    }
+  }
+}
+
