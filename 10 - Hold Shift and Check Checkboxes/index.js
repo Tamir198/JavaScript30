@@ -1,6 +1,6 @@
 let isFirstClickOnCheckbox = true;
 let isShiftPressed = false;
-let firstCheckboxIndex;
+let firstCheckBoxIndex = 0;
 const checkBoxes = [...document.querySelectorAll('.inbox input')];
 
 checkBoxes.forEach(checkbox => checkbox.addEventListener("click", clickCheckBoxesInrange));
@@ -8,16 +8,19 @@ checkBoxes.forEach(checkbox => checkbox.addEventListener("click", clickCheckBoxe
 function updateFirstCheckboxClicked(e) {
   for (let i = 0, len = checkBoxes.length; i < len; i++) {
     if (isFirstClickOnCheckbox && checkBoxes[i] == e.target) {
-      firstCheckboxIndex = i;
+      return i;
     };
   }
 }
 
 function clickCheckBoxesInrange(e) {
-  updateFirstCheckboxClicked(e);
+  if (isFirstClickOnCheckbox) {
+    firstCheckBoxIndex = updateFirstCheckboxClicked(e);
+  }
+
   isFirstClickOnCheckbox = false;
   if (e.shiftKey) {
-    for (let i = firstCheckboxIndex; i < checkBoxes.length; i++) {
+    for (let i = firstCheckBoxIndex; i < checkBoxes.length; i++) {
       if (e.target == checkBoxes[i]) {
         break;
       }
