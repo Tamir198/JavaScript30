@@ -2,13 +2,14 @@ var playerContainer = document.querySelector('.player');
 let videoScreen = playerContainer.querySelector('.viewer');
 let progressOfVideo = playerContainer.querySelector('.progress__filled');
 let toggleVideoButton = playerContainer.querySelector('.toggle');
-let sliders = playerContainer.querySelectorAll('.player__slider');
+let voliumSlider = document.getElementsByName("volume")[0];
+let playSpeedSlider = document.getElementsByName("playbackRate")[0];
 let skipTimeButtons = playerContainer.querySelectorAll('[data-skip]');
 
 const toggleVideo = ()=>{
   let shouldPlay = false;
 
-  function help(){
+  function changePlayIcon(){
     shouldPlay = !shouldPlay;
 
     if(shouldPlay){
@@ -20,7 +21,7 @@ const toggleVideo = ()=>{
     }
   }
 
-  return help;
+  return changePlayIcon;  
 }
 
 const playVideo = ()=>videoScreen.play();
@@ -29,19 +30,25 @@ const stopVideo = () => videoScreen.pause();
 
 function changeTimeOfVideo(e){
   const timeToSkip = parseInt(e.target.getAttribute('data-skip'));
-  if(timeToSkip < 0 && videoScreen.currentTime + timeToSkip < 0){
-  videoScreen.currentTime = 0; 
-
-  }
   videoScreen.currentTime = videoScreen.currentTime + timeToSkip ; 
 }
 
-function UpdateVideoProgressBar(){
-  //TODO Continue here
+function UpdateVideoProgressBar(e){
+  let percent = (videoScreen.currentTime/videoScreen.duration)*100;
+  progressOfVideo.style.flexBasis =   `${percent}%`;
 }
 
+function updateVolium(){ 
+  videoScreen.volume = voliumSlider.value;
+}
+
+function updatePlaySpeed(){
+  videoScreen.playbackRate  = playSpeedSlider.value;
+}
 
 toggleVideoButton.addEventListener('click', toggleVideo());
 skipTimeButtons.forEach(button => button.addEventListener('click', changeTimeOfVideo));
-sliders.forEach(slider => slider.addEventListener('click', toggleVideo()));
 videoScreen.addEventListener('timeupdate',UpdateVideoProgressBar)
+videoScreen.addEventListener('click',toggleVideo())
+voliumSlider.addEventListener('change',updateVolium)
+playSpeedSlider.addEventListener('change',updatePlaySpeed)
