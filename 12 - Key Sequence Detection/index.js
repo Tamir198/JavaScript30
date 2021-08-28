@@ -1,5 +1,5 @@
 const easterEgg = "tamir";
-let userRecentKeys = [];
+const userRecentKeys = [];
 
 document.addEventListener('keydown', (e) => {
   userRecentKeys.push(e.key);
