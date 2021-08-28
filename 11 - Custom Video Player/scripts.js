@@ -1,54 +1,48 @@
-var playerContainer = document.querySelector('.player'); 
-let videoScreen = playerContainer.querySelector('.viewer');
-let progressOfVideo = playerContainer.querySelector('.progress__filled');
-let toggleVideoButton = playerContainer.querySelector('.toggle');
-let voliumSlider = document.getElementsByName("volume")[0];
-let playSpeedSlider = document.getElementsByName("playbackRate")[0];
-let skipTimeButtons = playerContainer.querySelectorAll('[data-skip]');
+const playerContainer = document.querySelector('.player');
+const videoScreen = playerContainer.querySelector('.viewer');
+const progressOfVideo = playerContainer.querySelector('.progress__filled');
+const toggleVideoButton = playerContainer.querySelector('.toggle');
+const voliumSlider = document.getElementsByName("volume")[0];
+const playSpeedSlider = document.getElementsByName("playbackRate")[0];
+const skipTimeButtons = playerContainer.querySelectorAll('[data-skip]');
 
-const toggleVideo = ()=>{
+const toggleVideo = () => {
   let shouldPlay = false;
 
-  function changePlayIcon(){
+  function changePlayIcon() {
     shouldPlay = !shouldPlay;
 
-    if(shouldPlay){
-      toggleVideoButton.innerHTML  = "❚ ❚";
+    if (shouldPlay) {
+      toggleVideoButton.innerHTML = "❚ ❚";
       playVideo();
-    }else{
-      toggleVideoButton.innerHTML  = "▶";
+    } else {
+      toggleVideoButton.innerHTML = "▶";
       stopVideo();
     }
   }
 
-  return changePlayIcon;  
+  return changePlayIcon;
 }
 
-const playVideo = ()=>videoScreen.play();
+const playVideo = () => videoScreen.play();
 const stopVideo = () => videoScreen.pause();
 
-
-function changeTimeOfVideo(e){
-  const timeToSkip = parseInt(e.target.getAttribute('data-skip'));
-  videoScreen.currentTime = videoScreen.currentTime + timeToSkip ; 
+const changeTimeOfVideo = () => {
+  const timeToSkip = parseFloat(e.target.getAttribute('data-skip'));
+  videoScreen.currentTime = videoScreen.currentTime + timeToSkip;
 }
 
-function UpdateVideoProgressBar(e){
-  let percent = (videoScreen.currentTime/videoScreen.duration)*100;
-  progressOfVideo.style.flexBasis =   `${percent}%`;
+const UpdateVideoProgressBar = () => {
+  const percent = (videoScreen.currentTime / videoScreen.duration) * 100;
+  progressOfVideo.style.flexBasis = `${percent}%`;
 }
 
-function updateVolium(){ 
-  videoScreen.volume = voliumSlider.value;
-}
-
-function updatePlaySpeed(){
-  videoScreen.playbackRate  = playSpeedSlider.value;
-}
+const updateVolium = () => videoScreen.volume = voliumSlider.value;
+const updatePlaySpeed = () => videoScreen.playbackRate = playSpeedSlider.value;
 
 toggleVideoButton.addEventListener('click', toggleVideo());
+videoScreen.addEventListener('click', toggleVideo());
 skipTimeButtons.forEach(button => button.addEventListener('click', changeTimeOfVideo));
-videoScreen.addEventListener('timeupdate',UpdateVideoProgressBar)
-videoScreen.addEventListener('click',toggleVideo())
-voliumSlider.addEventListener('change',updateVolium)
-playSpeedSlider.addEventListener('change',updatePlaySpeed)
+videoScreen.addEventListener('timeupdate', UpdateVideoProgressBar);
+voliumSlider.addEventListener('change', updateVolium);
+playSpeedSlider.addEventListener('change', updatePlaySpeed);
